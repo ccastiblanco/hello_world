@@ -1,0 +1,2 @@
+mi segundo archivo
+para utilizar el add desde la linea de comando
