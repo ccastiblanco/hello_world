@@ -1,4 +1,4 @@
 # hello_world
 Mi primer repositorio en GitHub
-## Mi titulo segungo
+## Mi titulo segundo
 Mas informacion
