@@ -70,7 +70,7 @@ Por favor escriba el anterior ejemplo y ejecutelo en el próximo espacio.
 _Ejercicio 1_
 ```{r example1}
 ## Escriba el ejemplo en el siguiente espacio (1 línea de código) ##
-
+x <- rnorm(5)
 # --------------------------- #
 x
 
@@ -85,9 +85,16 @@ _Ejercicio 2_
 Consulte la ayuda a través de R estudio para entender en qué consiste el paquete "base" de R. ¿Qué ofrece el paquete, explore su contenido? 
 
 R/
+?base
+
+## operaciones basicas: aritmpeticas, input/output, soporte a programacion básica. Es el que viene instalado predefinido
 
 
+library(help = "base")
 
+?rnorm
+
+The Normal Distribution
 
 ```
 ?rnorm
@@ -100,16 +107,19 @@ Como hemos mencionado, la aplicación de la función rnorm nos dio un vector de ci
 vector <- c(1,4,5,6)
 
 ```
+c es para crear el vector, debe ser del mismo tipo de datos
+
 
 Un vector es un objeto de una sola dimensión donde sus valores pueden ser de un sólo tipo, por ejemplo, de tipo caracter, númericos, o lógicos.
 ```{R vector}
 x <-c(0.5, 0.6) # numérico
+## typeof dice cual es el tipo del objeto
 typeof(x)
 x <-c(TRUE, FALSE) #logico
 typeof(x)
 x <-c("a", "b", "c") #caracter
 typeof(x)
-x <-c(10:20) # integer/entero
+x <-c(10:20) # integer/entero del 10 al 20, slice, va de uno en uno porque es por defecto
 typeof(x)
 x <-c(1+0i, 2+4i) #compleja
 typeof(x)
@@ -123,7 +133,13 @@ Escriba un vector de enteros con cuatro elementos
 # Escriba un vector de enteros con cuatro elementos (1 línea de código)
 
 # --------------------------- #
-vector
+#vector
+
+vector1 <- c("cali", "medellin","barranquilla", "bogotá")
+
+vector <- c(10:13)
+
+?c
 
 ```
 Hemos creado un vector de cuatro valores y lo hemos asignado a la variable _vector_.
@@ -219,7 +235,8 @@ _Ejercicio 4_
 
 ```{R example3}
 # Por favor escriba los dos vectores en el siguiente espacio (2 lineas de código)
-
+age <- c(1,3,5,2,11)
+weight <- c(4.4,5.3,7.2,5.2,8.5)
 
 # --------------------------- #
 print("Vector de Age")
@@ -260,7 +277,9 @@ _Ejercicio 5_
 ```{R example4}
 # Escriba el código que permita instalar y cargar los dos paquetes (cuatro líneas)
 
+install.packages("tidyverse")
 
+install.packages("nycflights13")
 
 
 # --------------------------- #
@@ -291,8 +310,10 @@ _Ejercicio 7_
 ```{R example5}
 # Escriba el código que utilice la funcion seq y cree un vector de valores del 1 hasta el 10 (1 línea de código)
 
+?seq
+
 # --------------------------- #
-vector
+vector <-seq(from=1, to=10, by=1)
 
 ```
 
@@ -305,7 +326,7 @@ pairList <- function(array)
 #dentro de los {} van las lineas de código de la función
 for (number in array)
   {
-    if(number%%2==0)
+    if(number%%2==0) # %% genera el residuo de una division
     {
       print(number)  
     }
@@ -329,7 +350,7 @@ _Ejercicio 8_
 Cree un vector con nombre a y asignele los siguientes valores: k, j, h, a, c y m. 
 ```{R vector2}
 # 1 linea de código
-
+a <- c("k","j","h","a","c","m")
 # --------------------------- #
 ```
 
@@ -340,10 +361,11 @@ a[c(1, 3, 5)]
 a[2:6]
 ```
 R1/ 
-
+Se obtiene el valor de la posicion 3, en este caso es la "h"
 R2/
-
+Se pide que extraiga un subconjunto de datos, en este caso de las posiciones 1,3 y 5, que son el "k","h" u "c"
 R3/
+Se obtiene un slice o rango de datos, desde la posicion 2 hasta la posicion 6 de la matriz: "j" "h" "a" "c" "m"
 
 ###Matriz
 
@@ -360,11 +382,15 @@ class(x)
 
 Observe como fue el proceso de ingreso de los datos, realice los cambios necesarios con el fin que el ingreso de los datos sea por filas. 
 
+?matrix
+
+
+
 _Ejercicio 9_
 ```{R matrizExample2}
 # 2 lineas de código
-
-
+x <- matrix(1:20, nrow=5, ncol=4, byrow=TRUE)
+x
 # -------------------------
 ```
 
@@ -377,6 +403,11 @@ x[1, ] #obtenemos los elementos de la primera fila
 x[5 , 3] #obtenemos el elemento ubicado en la quinta fila y tercera columna 
 ```
 
+x[5 , 3] <- 22 # Cambio el valor en esa posición
+
+x[ ,2] <- 50 # toda la columna 2 queda con valor 50
+
+x
 
 La función _row.names()_ nos permite asignar nombres a las filas de la matriz, ejecute el siguiente código y observe el resultado.
 
@@ -394,6 +425,9 @@ x["R4",]
 ```
 
 De la misma forma que en las filas, podemos encontrar la función para las columnas _colnames_.
+
+columnas <- c("C1","C2","C3", "C4")
+
 
 ###Arrays
 
@@ -420,19 +454,22 @@ Vamos a utilizar un conjunto de datos ( __dataset__ ) de los vuelos realizados e
 ```{R provided}
 # La siguiente línea de código especifica que vamos a utilizar "flights" del paquete nycflights13, el uso de :: se realiza con la finalidad que no se presenten problemas si hay más variables "flights" en nuestro entorno de trabajo.
 nycflights13::flights
-flights
+flights  #este no existe, para que exista en mi propio entorno, debo asignarle el anterior
+flights <- nycflights13::flights
 ```
 
 El _Data frame_ es más general que una matriz ya que puede almacenar diferentes tipos de datos (númericos, carácteres, etc.). Es la estructura más utilizada en los proyectos de R. 
 
 Con la finalidad que podamos tener una primera idea de nuestros datos, vamos a utilizar la función str, en primer lugar, escriba la ayuda de _?str_ y obtenga más información de esta.
 
+srt Compactly Display the Structure of an Arbitrary R Object
+
 Ahora digite la función str sobre el objeto flights.
 
 _Ejercicio 9_
 ```{R example6}
 # Escriba el código que utilice la funcion str en el objeto flights (1 línea de código)
-
+str(flights)
 # --------------------------- #
 ```
 
@@ -444,6 +481,8 @@ Flights es un tipo de estructura en R conocida como data.frame. Si deseamos cono
 
 ```
 class(flights)
+
+# [1] "tbl_df"     "tbl"        "data.frame"
 ```
 Ahora, también podemos ver la información de nuestro data.frame como si fuera una hoja de trabajo en Excel. Utilice el siguiente código en su consola de comandos de RStudio.
 ```
@@ -493,6 +532,8 @@ Vamos a utilizar el siguiente código que utilizará el dataset de mtcars y las va
 
 ```{r attachExample}
 summary(mtcars$mpg)
+View(mtcars)
+
 plot(mtcars$mpg, mtcars$disp)
 plot(mtcars$mpg, mtcars$wt)
 ```
