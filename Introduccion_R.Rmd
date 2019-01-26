@@ -68,7 +68,7 @@ x <- rnorm(5)
 Por favor escriba el anterior ejemplo y ejecutelo en el próximo espacio.
 
 _Ejercicio 1_
-```{r example1}
+```{r exam}
 ## Escriba el ejemplo en el siguiente espacio (1 línea de código) ##
 x <- rnorm(5)
 # --------------------------- #
@@ -194,10 +194,10 @@ R por defecto inicializa su trabajo obteniendo las entradas desde el teclado y d
 Descargue el archivo example2.R, en el archivo actual de R que se encuentra trabajando utilice la función source() y dentro del paréntesis escriba el nombre del archivo descargado, es decir, source("example2.R). Finalmente, ejecute la anterior instrucción y observará que hará un llamado a un archivo externo con líneas de código. 
 
 ```{R inputExample}
-source("../example2.R")
+#source("../example2.R")
 ```
 ```{R outputExample, echo=FALSE}
-source("../example3.R")
+#source("../example3.R")
 ```
 
 Existen varias funciones que nos permiten crear archivos de distinto tipo, por ejemplo:
@@ -277,9 +277,9 @@ _Ejercicio 5_
 ```{R example4}
 # Escriba el código que permita instalar y cargar los dos paquetes (cuatro líneas)
 
-install.packages("tidyverse")
+#install.packages("tidyverse")
 
-install.packages("nycflights13")
+#install.packages("nycflights13")
 
 
 # --------------------------- #
@@ -454,7 +454,7 @@ Vamos a utilizar un conjunto de datos ( __dataset__ ) de los vuelos realizados e
 ```{R provided}
 # La siguiente línea de código especifica que vamos a utilizar "flights" del paquete nycflights13, el uso de :: se realiza con la finalidad que no se presenten problemas si hay más variables "flights" en nuestro entorno de trabajo.
 nycflights13::flights
-flights  #este no existe, para que exista en mi propio entorno, debo asignarle el anterior
+#flights  #este no existe, para que exista en mi propio entorno, debo asignarle el anterior
 flights <- nycflights13::flights
 ```
 
@@ -550,11 +550,11 @@ detach(mtcars)
 Este enfoque tiene limitaciones cuando los objetos almacenados en memoria tienen el mismo nombre. 
 
 ```{r attachExample3}
-mpg <- c(25, 36, 47)
-attach(mtcars)
-  plot(mpg, wt)
-detach(mtcars)
-mpg
+#mpg <- c(25, 36, 47)
+#attach(mtcars)
+#  plot(mpg, wt)
+#detach(mtcars)
+#mpg
 ```
 
 Para estos casos se puede utilizar un enfoque distinto a través de la función _with()_, apliquemos esta alternativa con el ejemplo anterior. ¿Qué utilidad observa?
@@ -578,7 +578,7 @@ with(mtcars, {
   stats <- summary(mpg)
   stats
 })
-stats
+#stats
  
 ```
 Si es necesario crear o asignar a un objeto dentro de este debemos utilizar el operador <<-
@@ -588,7 +588,7 @@ with(mtcars, {
   keepstats <<- summary(mpg)
 })
 keepstats
-nokeepstats
+#nokeepstats
 
  
 ```
@@ -603,15 +603,21 @@ diabetes <- c("Type1", "Type2", "Type1", "Type1")
 diabetesFactor <- factor(diabetes) 
 ```
 
+
+```{R factorExample1.1}
+diabetes2 <- c("Type1", "Type2", "Type1", "type1")
+diabetesFactor1 <- factor(diabetes2) 
+```
+
 Cree el siguiente factor y observe el orden de los niveles
 
 ```{R factorExample2}
-x <- factor(c("yes", "yes", "no", "yes", "no"))
+x1 <- factor(c("yes", "yes", "no", "yes", "no"))
 ```
 
 Para cambiar el orden de los niveles se especifica el parámetro "levels" en el orden deseado
 ```{R factorExample3}
-x <- factor(c("yes", "yes", "no", "yes", "no"), levels = c("yes", "no"))
+x2 <- factor(c("yes", "yes", "no", "yes", "no"), levels = c("yes", "no"))
 ```
 _Ejercicio 10_
 
@@ -619,33 +625,41 @@ Escriba y ejecute el código necesario para crear el factor ordinal ```PartientSt
 
 ```{R ejercicioFactor1}
 # 1 linea de código
-
+PatientStatus <- factor(c("Poor", "Improved", "Excellent"), levels = c("Poor", "Improved", "Excellent"))
 # -------------------
 PatientStatus
 ```
+OJO! Para elmiminar de la memoria: rm(variable)
+
 
 _Ejercicio 11_
 
 Si x <- c(1, 2, 3, 3, 5, 3, 2, 4, NA), ¿cuáles son los niveles de factor(x)?
 ```{R ejercicioFactor2}
 # 1 linea de código
+xx <- factor(c(1, 2, 3, 3, 5, 3, 2, 4, NA) )
 
 # -------------------
-x
+xx
 ```
 
 R/
+Los valores atipicos no tienen niveles en las variables categóricas. es decir, un valor NA queda sin nivel
+
 
 _Ejercicio 12_
 
 Sea x <- c(11, 22, 47, 47, 11, 47, 11). Si ejecutamos la expresión factor(x, levels=c(11,22,47), ordered=TRUE) cuál será el cuarto elemento que se despliega en la salida?
 
-R/
+R/ es el 47
 
 ```{R ejercicioFactor3}
 # 2 lineas de código
+x3 <- c(11, 22, 47, 47, 11, 47, 11)
+x3factor <- factor(x3, levels=c(11,22,47) , ordered=TRUE )
+x3factor                   
 
-
+x3factor[4]
 # -------------------
 ```
 _Ejercicio 13_
@@ -656,15 +670,19 @@ a. factor(z[3]) <-"b"
 b. levels(z[3]) <-"b"
 c. z[3] <-"b"
 
-R/
+R/ la respuesta es la c
 
 ```{R ejercicioFactor4}
 # 2 lineas de código
-
-
+z <-factor(c("p", "a" , "g", "t", "b"))
+z[3] <-"b"
 # -------------------
 z
+z[3]
+z[3:5]
+
 ```
+
 
 ### Listas
 
@@ -690,6 +708,7 @@ Podemos acceder a los elementos de la lista de la siguiente forma.
 ```{R listExample2}
 mylist[[2]]
 mylist[[3]][1,] #retorna la matric e imprime la primera fila
+mylist[[3]][1,2] #retorna un solo valor de la matriz
 mylist[["ages"]]
 ```
 
@@ -707,9 +726,16 @@ En la sección de "environment"" podemos encontrar una opción "import Dataset" qu
 
 El anterior proceso es simplemente una abstracción de unos pasos que podemos realizar también a través de código en R, debemos tener cuidado con el separador, el tipo de archivo y conocer cuál es la función para cargarlo. A continuación, veremos cómo llamar a la función que nos permitirá abrir el buscador de archivos de nuestro sistema operativo.
 
-```
+```{R ejemplofilechoose}
 file.choose()
+
+parks <- read.csv(file.choose())
+
+View(parks)
+
 ```
+
+
 Existen distintas funciones para cargar los archivos, por ejemplo:
 
 + read.csv. Carga un archivo csv con separador ","
@@ -738,10 +764,15 @@ _Ejercicio 15_
 Ejecute el siguiente código e ingrese los elementos que completen el dataframe.
 
 ```{R Inexample1}
-mydata <- data.frame(age=numeric(0), gender=character(0), weight=numeric(0))
-mydata <- edit(mydata)
+#mydata <- data.frame(age=numeric(0), gender=character(0), weight=numeric(0))
+#View(mydata)
+#mydata <- edit(mydata)
+#View(mydata)
+
 
 ```
+
+la nomenclatura "```" es para decir en markdown que es un codigo en R, pero no se ejecuta. Para que se ejecute, debo crear la nomenclatura "```{R indice}" , donde indice es un nombre especifico y unico
 
 ## Importando desde Excel
 
@@ -749,10 +780,10 @@ La mejor forma es importar archivos tipo CSV (Comma Separated Values) generados 
 
 ```{R Inexample2}
 #install.packages("xlsx")
-library("xlsx")
-workbook <- "" # dirección del archivo
-mydataframe <- read.xlsx(workbook, 1)
-View(mydataframe)
+#library("xlsx")
+#workbook <- "" # dirección del archivo
+#mydataframe <- read.xlsx(workbook, 1)
+#View(mydataframe)
 ```
 
 
