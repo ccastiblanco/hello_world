@@ -1,0 +1,285 @@
+---
+title: "visualizacionesConGgplot"
+author: "Claudia Castiblanco"
+date: "2 de febrero de 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Mi primer R Markdown para ggplot2
+
+## configuraciones
+```{r MisConf, include=FALSE}
+# setwd("~/Github/hello_world")
+# install.packages("tidyverse")
+# install.packages("treemap")
+# install.packages("openair")
+# install.packages("quantmod")
+# install.packages("readxl")
+# install.packages("lubridate")
+```
+
+##carga
+```{r Cargas, include=FALSE}
+library(tidyverse)
+library(treemap)
+library(openair)
+library(quantmod)
+library(readxl)
+library(lubridate)
+```
+
+##gramatica de graficos
+```{r gramgraf, include=FALSE}
+ggplot(data=diamonds, aes(x=carat, y=price)) +
+  geom_point() +
+  stat_smooth(method = lm) +
+  scale_x_log10() +
+  scale_y_log10()
+
+```
+
+##revision de datos mpg
+```{r revisionmpg, include=FALSE}
+?mpg
+
+str(mpg)
+
+# summary -- muestra un conjunto de estadisticos descriptivos
+
+summary(mpg)
+
+```
+
+##Nuevo plot con mpg
+```{r plotmpg1}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x= displ, y=hwy)) +
+  xlab("tamaño del motor") +
+  ylab("eficiencia del carro en carretera")
+
+```
+
+##segundo plot con mpg
+```{r plotmpg2}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x= cyl, y=hwy)) +
+  xlab("cilindros del motor") +
+  ylab("eficiencia del carro en carretera")
+
+```
+
+
+##tercer plot con mpg
+```{r plotmpg3}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x= drv, y=class)) +
+  xlab("tracción - caja de cambios") +
+  ylab("tipo de carro")
+
+```
+##cuarto plot con mpg
+```{r plotmpg4}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x= displ, y=hwy, color=class)) +
+  xlab("tamaño del motor") +
+  ylab("eficiencia en carretera millas/galon")
+
+
+```
+##5o. plot con mpg
+```{r plotmpg5}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x= displ, y=hwy, size=class)) 
+
+```
+##6o. plot con mpg
+```{r plotmpg5}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x= displ, y=hwy, size=cyl, color=class)) +
+  xlab("tamaño del motor") +
+  ylab("eficiencia en carretera millas/galon")
+  
+
+```
+
+##6o. plot con mpg
+```{r plotmpg6}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x= displ, y=hwy, alpha=class)) +
+  xlab("tamaño del motor") +
+  ylab("eficiencia en carretera millas/galon")
+
+```
+
+##7o. plot con mpg
+```{r plotmpg7}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x= displ, y=hwy, shape=class)) +
+  xlab("tamaño del motor") +
+  ylab("eficiencia en carretera millas/galon")
+
+```
+
+##8o. plot con mpg
+```{r plotmpg8}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x= displ, y=hwy, alpha=class, color=class)) +
+  xlab("tamaño del motor") +
+  ylab("eficiencia en carretera millas/galon")
+```
+##9o. plot con mpg
+```{r plotmpg9}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x= displ, y=hwy, alpha=class, color=class)) +
+  xlab("tamaño del motor") +
+  ylab("eficiencia en carretera millas/galon") +
+  facet_wrap(~ class, nrow=3)
+```
+
+##10o. plot con mpg
+```{r plotmpg10}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x= displ, y=hwy, alpha=class, color=class)) +
+  xlab("tamaño del motor") +
+  ylab("eficiencia en carretera millas/galon") +
+  facet_wrap(drv ~ cyl )
+```
+
+##11o. plot con mpg
+```{r plotmpg11}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x= displ, y=hwy, alpha=class, color=class)) +
+  xlab("tamaño del motor") +
+  ylab("eficiencia en carretera millas/galon") +
+  facet_grid( ~cyl) # siempre hace columnas
+
+```
+
+##12o. plot con mpg
+```{r plotmpg12}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x= displ, y=hwy, alpha=class, color=class)) +
+  xlab("tamaño del motor") +
+  ylab("eficiencia en carretera millas/galon") +
+  facet_grid( drv ~cyl) # siempre hace columnas
+
+```
+
+##13o. plot con mpg
+```{r plotmpg13}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x= drv, y=cyl)) 
+  
+```
+##13o. plot con mpg
+```{r plotmpg13}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x= displ, y=hwy, alpha=class, color=class)) +
+  xlab("tamaño del motor") +
+  ylab("eficiencia en carretera millas/galon") +
+  facet_grid( drv ~.) # siempre hace columnas
+
+```
+
+##14o. plot con mpg
+```{r plotmpg14}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x= displ, y=hwy, alpha=class, color=class)) +
+  xlab("tamaño del motor") +
+  ylab("eficiencia en carretera millas/galon") +
+  facet_grid(. ~cyl) # siempre hace columnas
+
+```
+
+?geom_smooth
+?geom_point
+
+
+##15o. plot con mpg
+```{r plotmpg15}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x= displ, y=hwy )) +
+  xlab("tamaño del motor") +
+  ylab("eficiencia en carretera millas/galon") +
+  geom_smooth(mapping = aes(x= displ, y=hwy, linetype=drv))
+
+```
+
+##16o. plot con mpg
+```{r plotmpg16}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x= displ, y=hwy )) +
+  xlab("tamaño del motor") +
+  ylab("eficiencia en carretera millas/galon") +
+  geom_smooth(mapping = aes(x= displ, y=hwy))
+
+```
+
+## grafico de barras 1
+```{r plotdiamonds1}
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x= cut )) #hace grafico de frecuecia
+```
+?geom_bar
+?stat_summary
+
+## grafico de barras 2
+```{r plotdiamonds2}
+ggplot(data = diamonds) +
+  stat_summary(mapping = aes(x= cut, y = depth ), 
+           fun.ymin = min,
+           fun.ymax = max,
+           fun.y =median) 
+```
+
+## grafico de barras 3
+```{r plotdiamonds3}
+ggplot(data = diamonds) +
+  geom_col(mapping = aes(cut,table ))
+```
+
+## grafico de barras 4
+```{r plotdiamonds4}
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x=cut, fill=cut ))
+```
+
+## grafico de barras 5
+```{r plotdiamonds5}
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x=cut, fill=clarity ))
+```
+
+## grafico de barras 6
+```{r plotdiamonds6}
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x=cut, fill=clarity ), position = "identity")
+```
+
+## bajar data sets
+## cargarlo:
+```{r cargadataset}
+daily_data= read.csv(file.choose(), header=TRUE, stringsAsFactors = FALSE)
+```
+
+summary(daily_data)
+
+## crear nuevo campo Date, de tipo date, basado en dteday
+```{r crearDate}
+daily_data$Date <- as.Date(daily_data$dteday)
+```
+
+
+
+
+
+
+
+
+
+
+
